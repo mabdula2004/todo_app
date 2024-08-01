@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 
 class todoscreen extends StatefulWidget {
-  const todoscreen({super.key});
-
   @override
   State<todoscreen> createState() => _todoscreenState();
 }
