@@ -11,6 +11,21 @@ class todoscreen extends StatefulWidget {
 class _todoscreenState extends State<todoscreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      backgroundColor: Colors.black87,
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Add Item',
+        backgroundColor: Colors.deepPurpleAccent,
+        child: ListTile(
+          title: Icon(Icons.add,color: Colors.white,) ,
+        ),
+        onPressed: showformDialog,
+      ),
+    );
   }
 }
+
+
+  void showformDialog() {
+  }
+
