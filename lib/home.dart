@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: Colors.black,
       ),
-      body: todoscreen(),
+      body: TodoScreen(),
     );
   }
 }

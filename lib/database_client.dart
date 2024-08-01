@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:path/path.dart';
-import 'dart:async';
 import 'package:path_provider/path_provider.dart';
+import 'dart:async';
 import 'package:sqflite/sqflite.dart';
-import 'todoItem.dart';
+import 'TodoItem.dart';
 
 class DatabaseHelper {
-  static final DatabaseHelper _instance = new DatabaseHelper.internal();
+  static final DatabaseHelper _instance =  DatabaseHelper.internal();
+
   factory DatabaseHelper() => _instance;
 
   final String tableName = "todoTbl";
@@ -39,23 +40,22 @@ class DatabaseHelper {
     print("Table is created");
   }
 
-  // insertion
-  Future<int> saveItem(todoItem item) async {
+  Future<int> saveItem(TodoItem item) async {
     var dbClient = await db;
     int res = await dbClient.insert(tableName, item.toMap());
     print(res.toString());
     return res;
   }
 
-  Future<List<todoItem>> getItems() async {
+  Future<List<TodoItem>> getItems() async {
     var dbClient = await db;
     var result = await dbClient.rawQuery(
         "SELECT * FROM $tableName ORDER BY $columnItemName ASC"
     );
     if (result.isEmpty) return [];
-    List<todoItem> items = [];
+    List<TodoItem> items = [];
     for (Map<String, dynamic> map in result) {
-      items.add(todoItem.fromMap(map));
+      items.add(TodoItem.fromMap(map));
     }
     return items;
   }
@@ -67,12 +67,13 @@ class DatabaseHelper {
     )!;
   }
 
-  Future<todoItem?> getItem(int id) async {
+  Future<TodoItem?> getItem(int id) async {
     var dbClient = await db;
-    var result = await dbClient.rawQuery("SELECT * FROM $tableName WHERE $columnId = $id");
+    var result = await dbClient.rawQuery(
+        "SELECT * FROM $tableName WHERE $columnId = $id");
 
     if (result.isEmpty) return null;
-    return todoItem.fromMap(result.first);
+    return TodoItem.fromMap(result.first);
   }
 
   Future<int> deleteItem(int id) async {
@@ -83,7 +84,8 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
-  Future<int> updateItem(todoItem item) async {
+
+  Future<int> updateItem(TodoItem item) async {
     var dbClient = await db;
     return await dbClient.update(
       "$tableName",
@@ -92,10 +94,10 @@ class DatabaseHelper {
       whereArgs: [item.id],
     );
   }
+
   Future close() async {
     var dbClient = await db;
     return dbClient.close();
   }
-
-
 }
+
